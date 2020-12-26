@@ -1,32 +1,36 @@
-# Prerequisites
-*.d
+*cp.tf
+*.pem
+# Local .terraform directories
+**/.terraform/*
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# .tfstate files
+*.tfstate
+*.tfstate.*
 
-# Precompiled Headers
-*.gch
-*.pch
+# Crash log files
+crash.log
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Exclude all .tfvars files, which are likely to contain sentitive data, such as
+# password, private keys, and other secrets. These should not be part of version 
+# control as they are data points which are potentially sensitive and subject 
+# to change depending on the environment.
+#
+*.tfvars
 
-# Fortran module files
-*.mod
-*.smod
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# Include override files you do wish to add to version control using negated pattern
+#
+# !example_override.tf
 
-# Executables
-*.exe
-*.out
-*.app
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
