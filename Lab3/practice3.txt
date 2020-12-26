@@ -1,0 +1,15 @@
+aws ec2 create-security-group --group-name practice-3-sg --description "Security group for 22, 80, 443" --vpc-id vpc-5a9b6f27 
+aws ec2 authorize-security-group-ingress --group-id sg-0a9ae7a58b067495c --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-0a9ae7a58b067495c --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-0a9ae7a58b067495c --protocol tcp --port 443 --cidr 0.0.0.0/0
+
+aws ec2 run-instances --image-id ami-0947d2ba12ee1ff75 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-0a9ae7a58b067495c --subnet-id subnet-0c48261fedabac092
+aws ec2 create-tags --resources i-04f09ffed3ce89fe2 --tags Key=Role,Value=WebServer
+aws ec2 allocate-address
+aws ec2 associate-address --allocation-id eipalloc-0f1b151bbe713b31a --instance-id i-04f09ffed3ce89fe2
+
+aws ec2 stop-instance --instance-id i-04f09ffed3ce89fe2
+aws ec2 modify-instance-attribute --instance-id i-04f09ffed3ce89fe2 --attribute userData --value file:///home/borysej90/itsu/aws/practice3/instance_script_base64.txt
+aws ec2 start-instance --instance-id i-04f09ffed3ce89fe2
+
+aws ec2 create-image --instance-id i-04f09ffed3ce89fe2 --name "practice-3-image" --description "Image with Apache Web Server"
